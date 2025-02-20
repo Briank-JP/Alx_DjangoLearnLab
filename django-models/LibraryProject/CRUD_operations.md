@@ -18,7 +18,7 @@ Book.object.get(id = retriev__book.id).title
 
 Delete
 retriev_book.delete()
-Book.objects.all
+Book.objects.all()
 
 <!-- <QuerySet []>
  -->
