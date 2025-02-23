@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import list_books, LibraryDetialView
+from .views import list_books, LibraryDetailView
 # from .views import L SignUpView, register
 from . import views
 # task 3 views
@@ -9,7 +9,7 @@ from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('books/', list_books, name='list_books'),
-    path('books/<int:pk>/', LibraryDetialView.as_view(), name='book_detail'),
+    path('books/<int:pk>/', LibraryDetailView.as_view(), name='book_detail'),
     
     # user authentication
     path("register/", views.register, name='register'),
