@@ -1,6 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.forms import UserCreationForm
 from django.views.generic.detail import DetailView
-from .models import Book, Author
+from .models import Book
 from .models import Library
 
 # Create your views here.
@@ -15,3 +17,22 @@ class LibraryDetialView(DetailView):
     template_name ='relationship_app/library_detail.html'
     context_object_name = 'library'
     
+
+# User Authentication
+class UserLoginView(LoginView):
+    template_name = 'registration/login.html'
+    
+class UserLogoutView(LogoutView):
+    template_name ='registration/logout.html'
+    
+# User Registration
+
+def register(request):
+    if request.method == 'POST':
+        form  = UserCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = UserCreationForm()
+        return render(request,'relationship_app/registration/register.html', {'form':form})
