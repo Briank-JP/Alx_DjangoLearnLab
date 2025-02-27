@@ -25,7 +25,7 @@ class CustomUserManager(BaseUserManager):
         
 class CustomUser(AbstractUser):
     date_of_birth = models.DateField(null=True, blank=True)
-    profile_picture = models.ImageField(upload_to='profile_photos', blank=True)
+    profile_photo = models.ImageField(upload_to='profile_photos', blank=True)
     
     objects = CustomUserManager()
     USERNAME_FIELD = 'username'
