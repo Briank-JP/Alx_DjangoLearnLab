@@ -35,6 +35,11 @@ SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
+# HTTPS connections
+SECURE_SSL_REDIRECT = True #Redirect all non-HTTPS requests to HTTPS.
+SECURE_HSTS_SECONDS = 31536000 #instruct browsers to only access the site via HTTPS for the specified time.
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True #to include all subdomains in the HSTS policy and to allow preloading.
 
 ALLOWED_HOSTS = []
 
