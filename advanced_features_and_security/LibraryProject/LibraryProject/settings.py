@@ -35,6 +35,10 @@ SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 SECURE_CONTENT_TYPE_NOSNIFF = True
 
+# Ensure Django correctly detects HTTPS requests behind a reverse proxy
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+
 # HTTPS connections
 SECURE_SSL_REDIRECT = True #Redirect all non-HTTPS requests to HTTPS.
 SECURE_HSTS_SECONDS = 31536000 #instruct browsers to only access the site via HTTPS for the specified time.
