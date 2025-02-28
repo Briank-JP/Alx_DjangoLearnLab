@@ -40,3 +40,12 @@ class Book(models.Model):
     title = models.CharField(max_length=200)
     author = models.CharField(max_length=100)
     publication_year = models.IntegerField()
+    
+    # Create custom permissions in the inner meta class of my model class
+    class Meta:
+        permissions = (
+            ("can_create", "Can create a books"),
+            ("can_view", "Can view books"),
+            ("can_edit", "can edit books"),
+            ("can_delete", "Can delete books"),
+        )
