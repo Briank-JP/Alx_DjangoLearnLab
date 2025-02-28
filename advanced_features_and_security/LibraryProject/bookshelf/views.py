@@ -9,9 +9,9 @@ the @permision_required method passes
 """
 # veiw book permissions
 @permission_required('bookshelf.can_view', raise_exception=True)
-def view_book(request):
+def book_list(request):
    book = Book.objects.all()
-   return render(request, 'bookshelf/view_book.html', {'book': book})
+   return render(request, 'bookshelf/book_list.html', {'book': book})
 
 # add  book permission
 @permission_required('bookshelf.can_create', raise_exception=True)
