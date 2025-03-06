@@ -23,3 +23,5 @@ In this task we are told to create a serializer file inside the app directory
 - then configured url patterns also know as the endpoints
    - This will ensure the API endpoint is accessible via HTTP
    - but first we have to register the app url file in the project url feil using the include function.
+   -
+Task 2(Perfom CRUD operations)
