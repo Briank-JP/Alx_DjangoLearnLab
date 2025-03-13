@@ -33,7 +33,7 @@ class BookListView(generics.ListAPIView):
     filter_backends = [rest_framework.filters]
     filterset_fields = ['title', 'author']
     search_fields = ['title', 'publication_year']
-    ordering_fields = ['publication_year', 'title']
+    ordering_fields = [filters.OrderingFilter]
     
 class BookDetailView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
