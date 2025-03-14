@@ -1,11 +1,11 @@
 from django.test import TestCase
 from rest_framework import status
-from rest_framework.test import APIClient
+from rest_framework.test import APITestCase
 
 
 # Create your tests here.
 
-class BookListTests(TestCase):
+class BookListTests(APITestCase):
     def setUp(self):
         print("setting up....")
         
