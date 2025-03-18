@@ -1,0 +1,18 @@
+{% extends "blog/base.html" %}
+{% block content %}
+
+<h2>Update Profile</h2>
+{% comment %} the enctype is helping to save the picture in  the background. if not put it wont save the profile pis {% endcomment %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <h3>User Information</h3>
+    {{ user_form.as_p }}
+
+    <h3>Profile Information</h3>
+    {{ profile_form.as_p }}
+
+    <button type="submit">Save Changes</button>
+</form>
+
+{% endblock %}
