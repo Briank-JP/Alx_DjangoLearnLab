@@ -107,9 +107,12 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
     fields = ['content']
     def form_valid(self, form):
         form.instance.post_id = self.kwargs['pk']
-        form.instance.post = get_object_or_404(Post, id=self.kwargs['post_id'])  # Associate the comment with the post
+        form.instance.author = self.request.user
+        # form.instance.post = get_object_or_404(Post, id=self.kwargs['post_id'])  # Associate the comment with the post
         return super().form_valid(form)
-    success_url = reverse_lazy('post_detail')
+   
+    def get_success_url(self):
+     return reverse_lazy('post_detail', kwargs={'pk': self.kwargs['pk']})
 # update acomment on a post and the person editing has to be the author(passestest)
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment

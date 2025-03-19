@@ -1,0 +1,15 @@
+{% extends "blog/base.html" %}
+{% block content %}
+{% for comment in comments %}
+    <p><strong>{{ comment.author }}</strong> - {{ comment.created_at }}</p>
+    <p>{{ comment.content }}</p>
+
+    {% if request.user == comment.author %}
+        <a href="{% url 'comment_edit' comment.id %}">Edit</a>
+        <a href="{% url 'comment_delete' comment.id %}">Delete</a>
+    {% endif %}
+    <hr>
+{% endfor %}
+<a href="{% url 'comment_create' post.id %}">Add a Comment</a>
+{% endblock content %}
+
