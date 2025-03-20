@@ -5,6 +5,23 @@ from django.views.generic import CreateView
 from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.db.models import Q
+# from .models import Post
+
+
+# implementing the search functionality on the post model
+
+def search(request):
+    query = request.GET.get('q')
+    result = []
+    if query:
+        result = Post.objects.filter(
+            Q(title__icontains=query) | #search by title
+            Q(content__icontains=query) |  #search by content
+            Q(tags__name__icontains=query)  #search by tags 
+        ).distinct # the distinct ensures that we dont get duplicates.
+        
+    return render(request, 'blog/search_results.html', {'result': result, 'query': query})
 
 
 # class based vies for crud operations of the posts
@@ -113,6 +130,7 @@ class CommentCreateView(LoginRequiredMixin, CreateView):
    
     def get_success_url(self):
      return reverse_lazy('post_detail', kwargs={'pk': self.kwargs['pk']})
+ 
 # update acomment on a post and the person editing has to be the author(passestest)
 class CommentUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Comment

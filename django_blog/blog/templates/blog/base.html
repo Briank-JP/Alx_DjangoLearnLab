@@ -18,7 +18,12 @@
             </ul>
         </nav>
     </header>
-
+    {% comment %} search functionality {% endcomment %}
+    <form method="GET" action="{% url 'search' %}">
+        <input type="text" name="q" placeholder="Search posts..." required>
+        <button type="submit">Search</button>
+    </form>
+    
     <div class="content">
         {% block content %}
         <!-- Page-specific content goes here -->

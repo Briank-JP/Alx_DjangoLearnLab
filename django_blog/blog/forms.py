@@ -1,8 +1,15 @@
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .models import User
-from .models import Profile, Comment
+from .models import Profile, Comment,Post
+from django import forms
 
+
+
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+        fields = ['title', 'content', 'tags'] #this includes the tags attribute to allowing users to add tags when creating or editing posts.
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField()

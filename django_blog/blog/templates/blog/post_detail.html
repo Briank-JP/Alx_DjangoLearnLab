@@ -8,4 +8,11 @@
         <a href="{% url 'post_detail' object.pk %}">Edit</a>
         {% comment %} <a href="{% url 'post-delete' post.pk %}">Delete</a> {% endcomment %}
     {% endif %}
+{% comment %} tags {% endcomment %}
+    <p>Tags: 
+        {% for tag in post.tags.all %}
+            <a href="{% url 'posts_by_tag' tag.name %}">{{ tag.name }}</a>
+        {% endfor %}
+    </p>
+    
 {% endblock %}
