@@ -6,6 +6,7 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
+from taggit.models import Tag 
 # from .models import Post
 
 
@@ -33,7 +34,16 @@ from .models import Comment
 
 
 
+class PostByTagListView(ListView):
+    model = Post
+    template_name = 'blog/posts_by_tag.html'  # ✅ Create this template later
+    context_object_name = 'posts'
 
+    def get_queryset(self):
+        """Filters posts based on the selected tag"""
+        tag_slug = self.kwargs.get('tag_slug')
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        return Post.objects.filter(tags__in=[tag])  # ✅ Filter posts by tag
 
 # Create your views here.
 class RegisterVeiw(CreateView):
