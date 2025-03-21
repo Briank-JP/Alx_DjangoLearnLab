@@ -15,7 +15,7 @@ class PostForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter title here'}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Write your content...'}),
-            'tags': TagWidget(attrs={'class': 'form-control', 'placeholder': 'Enter tags separated by commas'}),  # ✅ Add TagWidget
+            'tags': TagWidget(),  # ✅ Add TagWidget
         }
 
 class CustomUserCreationForm(UserCreationForm):
