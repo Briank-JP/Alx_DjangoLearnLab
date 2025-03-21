@@ -3,6 +3,7 @@ from django import forms
 from .models import User
 from .models import Profile, Comment,Post
 from django import forms
+from taggit.forms import TagWidget
 
 
 
@@ -10,6 +11,12 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'content', 'tags'] #this includes the tags attribute to allowing users to add tags when creating or editing posts.
+        
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter title here'}),
+            'content': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Write your content...'}),
+            'tags': TagWidget(attrs={'class': 'form-control', 'placeholder': 'Enter tags separated by commas'}),  # ✅ Add TagWidget
+        }
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.EmailField()
