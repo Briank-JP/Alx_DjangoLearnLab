@@ -23,7 +23,10 @@ class CustomUserSerializer(serializers.ModelSerializer):
             profile_picture=validated_data.get('profile_picture', None)
         )
         token = Token.objects.create(user=user)
-        return user
+        return {
+            'user': CustomUserSerializer(user).data,
+            'token': token.key,
+        }
         
 """
 Generally this serialiser file, we are utilizing  the custom user model and  the get_user_model, this will help choose the current user; if itss the default user or our custom user model.
