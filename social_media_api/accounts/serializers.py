@@ -6,7 +6,6 @@ from rest_framework.authtoken.models import Token
 User = get_user_model()
 
 class CustomUserSerializer(serializers.ModelSerializer):
-    # the extra kwargs on the password helps hide the password during API responses. when a user makes a GET request for the user, the password will not show because of the write only protection from the extra kwargs dictionary.
     password = serializers.CharField(write_only=True)
     class Meta:
         model = CustomUser
@@ -15,7 +14,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     # the create method will help us get information from the user and use the creat_uer()function to create the user with validated data
     def create(self, validated_data):
         # required fields are categoried with the [field] while optional field are seen with .get(fiel, default field)
-        user = User.objects.create_user(
+        user = get_user_model().objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],
             password=validated_data['password'],
