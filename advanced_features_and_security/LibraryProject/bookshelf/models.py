@@ -11,7 +11,8 @@ class CustomUserManager(BaseUserManager):
             username=username,
             email=self.normalize_email(email),
             date_of_birth=date_of_birth,
-            profile_photo=profile_photo,)
+            profile_photo=profile_photo,
+            )
         user.set_password(password)
         user.save(using = self._db)
         return user

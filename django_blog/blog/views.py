@@ -7,10 +7,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from taggit.models import Tag 
-# from .models import Post
+from django.views.generic import ListView,CreateView,DeleteView, DetailView, UpdateView
+from.models import Post, Comment
 
-
-# implementing the search functionality on the post model
 
 def search(request):
     query = request.GET.get('q')
@@ -24,21 +23,11 @@ def search(request):
         
     return render(request, 'blog/search_results.html', {'result': result, 'query': query})
 
-
 # class based vies for crud operations of the posts
-from django.views.generic import ListView,CreateView,DeleteView, DetailView, UpdateView
-from.models import Post
-
-# class based views for crud operations on comments
-from .models import Comment
-
-
-
 class PostByTagListView(ListView):
     model = Post
     template_name = 'blog/posts_by_tag.html'  # ✅ Create this template later
     context_object_name = 'posts'
-
     def get_queryset(self):
         """Filters posts based on the selected tag"""
         tag_slug = self.kwargs.get('tag_slug')
@@ -56,25 +45,21 @@ class RegisterVeiw(CreateView):
         return super().form_valid(form)
     
 # create a view to handle user profile updates
-
 @login_required
 def profile(request):
     if request.method == 'POST':
         user_form = UserUpdateForm(request.POST, instance=request.user)
         profile_form = ProfileUpdateForm(request.POST, request.FILES, instance=request.user.profile)
-        
         if user_form.is_valid() and profile_form.is_valid():
             user_form.save()
             profile_form.save()
             return redirect('profile')
-        
     else:
         user_form = UserUpdateForm(instance=request.user)
         profile_form = ProfileUpdateForm(instance=request.user.profile)
     return render(request, 'blog/profile.html', {'user_form': user_form, 'profile_form': profile_form})
 
 # creating classbased vies to handle all crud operations
-
 class PostListView(ListView):
     model = Post
     template_name = 'blog/post_list.html'
@@ -87,12 +72,10 @@ class PostDetailView(DetailView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title', 'content']
-    
     # Assign a logged in user
     def form_valid(self, form):
         form.instance.author = self.request.user  # Assign logged-in user as author
         return super().form_valid(form)
-    
     success_url = reverse_lazy('posts_home') 
     
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
