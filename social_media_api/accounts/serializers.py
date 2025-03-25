@@ -2,18 +2,22 @@ from rest_framework import serializers
 from .models import CustomUser
 from django.contrib.auth import get_user_model
 from rest_framework.authtoken.models import Token
-# Get the User model from the current default authentication system settings.(auth_user_modle)
-User = get_user_model()
+
+
 
 class CustomUserSerializer(serializers.ModelSerializer):
+    
     password = serializers.CharField(write_only=True)
     class Meta:
-        model = CustomUser
+        model = get_user_model
         fields = ['username', 'password','bio', 'email']
-        
+          
+          
     # the create method will help us get information from the user and use the creat_uer()function to create the user with validated data
     def create(self, validated_data):
-        # required fields are categoried with the [field] while optional field are seen with .get(fiel, default field)
+        
+ # required fields are categoried with the [field] while optional field are seen with .get(fiel, default field)
+ 
         user = get_user_model().objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],
