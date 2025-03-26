@@ -1,9 +1,12 @@
 from django.shortcuts import render
-from rest_framework import viewsets, permissions, filters
+from rest_framework import viewsets, permissions, filters, status
 from .models import Post, Comment
 from .serializers import PostSerializer, CommentSerializer
 from rest_framework.pagination import PageNumberPagination
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.decorators import api_view,permission_classes
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 
 # Create your views here.
 
@@ -38,3 +41,18 @@ class Commentviewset(viewsets.ModelViewSet):
     # set the current author to be the logged in user
     def perfomcreate(self, serializer):
         serializer.save(author=self.request.user)
+        
+        
+# implement feeds functionality where the user can see feeds from the people he follows
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+
+def feeds_view(request):
+    user = request.user
+    followed_users = user.following.all() #get all the users being followed
+    
+    # get posts by the folowd users
+    post = Post.objects.filter(author__in=followed_users).order_by('-created_at')
+    
+    serializer = PostSerializer(post, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
