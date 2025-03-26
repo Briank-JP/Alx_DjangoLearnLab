@@ -49,10 +49,10 @@ class Commentviewset(viewsets.ModelViewSet):
 
 def feeds_view(request):
     user = request.user
-    followed_users = user.following.all() #get all the users being followed
+    following_users = user.following.all() #get all the users being followed
     
     # get posts by the folowd users
-    post = Post.objects.filter(author__in=followed_users).order_by('-created_at')
+    post = Post.objects.filter(author__in=following_users).order_by('-created_at')
     
     serializer = PostSerializer(post, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
