@@ -7,6 +7,7 @@ from rest_framework.authtoken.models import Token #will  help generate tokens fo
 from rest_framework.permissions import AllowAny, IsAuthenticated # will help us know if a user has certain permisions before accessing the api
 from django.contrib.auth import authenticate
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework import permissions
 
 # Create your views here.
 class Register(generics.CreateAPIView):
@@ -58,7 +59,7 @@ class Logout(generics.GenericAPIView):
 # following and unfollowing other users
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([permissions.IsAuthenticated])
 def follow_user(request, user_id):
     # check if the user isnt following themselves
     if request.user.id == user_id:
@@ -76,7 +77,7 @@ def follow_user(request, user_id):
     return Response(status=status.HTTP_200_OK)
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([permissions.IsAuthenticated])
 def unfollow_user(request, user_id):
     # check if the user isnt unfollowing themselves
     if request.user.id == user_id:
