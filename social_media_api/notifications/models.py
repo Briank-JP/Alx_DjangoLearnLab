@@ -7,7 +7,7 @@ from django.contrib.contenttypes.models import ContentType
 
 
 
-class Notifications(models.Model):
+class Notification(models.Model):
     # These lines link to the users ie; the person notified and the one notifiying
     recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notifications') #who gets notified
     actor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notification_sent') #th person who sent the notification
