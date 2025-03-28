@@ -1,16 +1,16 @@
 from django.db import models
-from django.contrib.auth.models import get_user_model
+from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
 # Create your models here.
 
-User = get_user_model()
+
 
 class Notifications(models.Model):
     # These lines link to the users ie; the person notified and the one notifiying
-    recipient = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications') #who gets notified
-    actor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notification_sent') #th person who sent the notification
+    recipient = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notifications') #who gets notified
+    actor = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notification_sent') #th person who sent the notification
     verb = models.CharField(max_length=200) #shows what happened; user1 liked your comment/post
 
     # These lines link the notification to any type of object (like a post, comment, or user).
