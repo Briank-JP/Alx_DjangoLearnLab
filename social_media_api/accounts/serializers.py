@@ -10,7 +10,7 @@ class CustomUserSerializer(serializers.ModelSerializer):
     password = serializers.CharField()
     class Meta:
         model = CustomUser
-        fields = ['username', 'password','bio', 'email']
+        fields = ['username', 'password']
           
           
     # the create method will help us get information from the user and use the creat_uer()function to create the user with validated data

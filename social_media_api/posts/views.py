@@ -41,7 +41,7 @@ class Commentviewset(viewsets.ModelViewSet):
     # set the current author to be the logged in user
     def perfomcreate(self, serializer):
         serializer.save(author=self.request.user)
-        
+         
         
 # implement feeds functionality where the user can see feeds from the people he follows
 @api_view(['GET'])
